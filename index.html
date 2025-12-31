@@ -3,218 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASR Digital Agency</title>
+    <title>ASR Digital Agency - Official</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
     <style>
-        /* --- 1. RESET & DASAR --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            padding-bottom: 60px;
+        /* --- 1. GLOBAL STYLE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8f9fa; 
+            color: #333; 
+            padding-bottom: 0;
+            overflow-x: hidden;
         }
-        a { text-decoration: none; color: inherit; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
         ul { list-style: none; }
+        
+        /* Utility Halaman */
+        .page-section { display: none; padding-bottom: 60px; animation: fadeIn 0.3s ease; }
+        .page-section.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* --- 2. NAVBAR --- */
+        /* --- 2. NAVBAR (MODIFIKASI LOGO) --- */
         .navbar {
-            background: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-bottom: 1px solid #eee;
+            background: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            height: 60px;
         }
-        .logo { font-weight: 900; font-size: 18px; color: #15803d; letter-spacing: -0.5px; }
-        .menu-link { font-size: 13px; font-weight: 600; color: #555; margin-left: 15px; }
+        
+        /* CSS KHUSUS LOGO + TEKS BERJEJER */
+        .logo { 
+            font-weight: 900; 
+            font-size: 18px; 
+            color: #15803d; 
+            letter-spacing: -0.5px; 
+            display: flex; 
+            align-items: center; /* Pastikan vertikal rata tengah */
+            gap: 10px; /* Jarak antara gambar logo dan tulisan */
+        }
+        
+        /* Atur ukuran gambar logo.png agar tidak pecah navbar */
+        .logo img {
+            height: 35px; /* Tinggi logo disesuaikan */
+            width: auto;  /* Lebar menyesuaikan otomatis */
+            object-fit: contain;
+        }
 
-        /* --- 3. HERO SECTION --- */
-        .hero {
-            position: relative;
-            text-align: center;
-            color: white;
-            background: #111;
-            overflow: hidden;
+        .menu-link { font-size: 13px; font-weight: 600; color: #555; display: flex; align-items: center; gap: 5px; }
+
+        /* --- 3. SUB-HEADER --- */
+        .sub-header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+            background: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; padding: 0 15px;
         }
-        .hero img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            opacity: 0.6; /* Gelapkan gambar biar tulisan terbaca */
-            display: block;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .hero h1 { font-size: 22px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .back-btn { position: absolute; left: 15px; font-size: 14px; font-weight: 600; color: #15803d; display: flex; align-items: center; gap: 5px; }
+        .page-title { font-size: 16px; font-weight: 700; color: #15803d; }
+
+        /* --- 4. HERO SECTION --- */
+        .hero { position: relative; text-align: center; color: white; background: #111; overflow: hidden; }
+        .hero img { width: 100%; height: 220px; object-fit: cover; opacity: 0.5; display: block; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        .hero h1 { font-size: 22px; margin-bottom: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .hero p { font-size: 13px; margin-bottom: 15px; opacity: 0.9; }
-        .hero-btn {
-            background: #15803d; color: white;
-            padding: 8px 24px; border-radius: 50px;
-            font-size: 13px; font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
+        .hero-btn { background: #15803d; color: white; padding: 8px 24px; border-radius: 50px; font-size: 13px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: transform 0.1s; }
+        .hero-btn:active { transform: scale(0.95); }
 
-        /* --- 4. KATEGORI --- */
-        .category-scroll {
-            display: flex; overflow-x: auto; padding: 15px 15px; gap: 12px;
-            background: white; margin-bottom: 10px;
-            scrollbar-width: none; /* Sembunyikan scrollbar */
-        }
+        /* --- 5. CATEGORY MENU --- */
+        .category-scroll { display: flex; overflow-x: auto; padding: 15px; gap: 12px; background: white; margin-bottom: 10px; scrollbar-width: none; }
+        .category-scroll::-webkit-scrollbar { display: none; }
         .cat-item {
-            min-width: 75px; display: flex; flex-direction: column;
-            align-items: center; text-align: center;
-            background: #f1f5f9; padding: 10px 5px; border-radius: 10px;
+            min-width: 80px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            background: #f1f5f9; padding: 12px 5px; border-radius: 12px; transition: background 0.2s; cursor: pointer;
         }
-        .cat-icon { font-size: 20px; margin-bottom: 5px; }
+        .cat-item:active { background: #e2e8f0; transform: scale(0.98); }
+        .cat-icon { font-size: 24px; margin-bottom: 6px; color: #334155; }
         .cat-name { font-size: 11px; font-weight: 700; color: #475569; }
 
-        /* --- 5. LIST LAYANAN --- */
+        /* --- 6. COMPONENTS --- */
         .service-list-section { background: white; padding: 20px; margin-bottom: 10px; }
-        .section-title {
-            font-size: 16px; font-weight: 800; margin-bottom: 15px;
-            color: #1e293b; display: flex; align-items: center;
-        }
-        .section-title::before {
-            content: ''; display: inline-block; width: 4px; height: 18px;
-            background: #15803d; margin-right: 8px; border-radius: 2px;
-        }
-        .check-list li {
-            font-size: 14px; margin-bottom: 10px; display: flex; align-items: flex-start;
-            color: #334155; line-height: 1.4;
-        }
-        .check-list li span { color: #15803d; margin-right: 10px; font-weight: bold; }
-
-        /* --- 6. PRODUK GRID --- */
-        .product-section { padding: 20px; background: white; }
+        .section-title { font-size: 16px; font-weight: 800; margin-bottom: 15px; color: #1e293b; display: flex; align-items: center; }
+        .section-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #15803d; margin-right: 8px; border-radius: 2px; }
+        
+        .check-list li { font-size: 14px; margin-bottom: 10px; display: flex; align-items: flex-start; color: #334155; line-height: 1.4; }
+        .check-list i { color: #15803d; margin-right: 10px; font-size: 16px; font-weight: bold; }
+        
+        .product-section, .container { padding: 20px; background: white; min-height: 100vh; }
+        .sub-page-content { padding-top: 70px; padding-bottom: 40px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         
-        .card {
-            border: 1px solid #e2e8f0; border-radius: 10px;
-            overflow: hidden; background: white;
-            display: flex; flex-direction: column;
-        }
-        .card img {
-            width: 100%; height: 100px; object-fit: cover;
-            background: #cbd5e1; /* Warna abu kalau gambar loading */
-        }
-        .card-body { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
-        .card-price { color: #15803d; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
-        .btn-small {
-            margin-top: auto; background: #0f172a; color: white;
-            text-align: center; padding: 8px; border-radius: 6px;
-            font-size: 12px; font-weight: 600;
-        }
+        .card { border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; background: white; display: flex; flex-direction: column; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        
+        /* Ratio gambar */
+        .img-hero { width: 100%; height: 100px; object-fit: cover; background: #cbd5e1; }
+        .img-web { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+        .img-desain { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+        .img-nulis { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .img-cv { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
 
-        /* FOOTER */
+        .card-body, .card-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
+        .card-desc { font-size: 11px; color: #64748b; margin-bottom: 5px; }
+        .card-price { color: #15803d; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+        
+        .btn-small { margin-top: auto; background: #0f172a; color: white; text-align: center; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .btn-wa { display: block; background: #15803d; color: white; text-align: center; padding: 12px; border-radius: 50px; font-weight: bold; font-size: 14px; margin-top: 20px; box-shadow: 0 4px 10px rgba(21, 128, 61, 0.3); }
+
+        .badge-promo { position: absolute; top: 8px; right: 8px; background: #dc2626; color: white; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 10; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
         .footer { text-align: center; padding: 30px; font-size: 12px; color: #94a3b8; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">ASR DIGITAL</div>
-        <a href="https://wa.me/6285892767032" class="menu-link">Kontak</a>
-    </nav>
+    <div id="page-home" class="page-section active">
+        
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="ASR Logo">
+                ASR DIGITAL
+            </div>
+            <a href="https://wa.me/6285892767032" class="menu-link"><i class="ri-whatsapp-line"></i> Kontak</a>
+        </nav>
 
-    <header class="hero">
-        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600&q=80" alt="Background">
-        <div class="hero-overlay">
-            <h1>Jasa Digital Kreatif</h1>
-            <p>Bikin Website, Desain, & Konten Sosmed.<br>Cepat, Murah, Profesional.</p>
-            <a href="#produk" class="hero-btn">Lihat Paket Hemat</a>
-        </div>
-    </header>
+        <header class="hero">
+            <img src="card.png" alt="Background">
+            <div class="hero-overlay">
+                <h1>Jasa Digital Kreatif</h1>
+                <p>Website, Desain & Konten Profesional</p>
+                <a href="#produk" class="hero-btn">Lihat Promo</a>
+            </div>
+        </header>
 
-    <div class="category-scroll">
-        <div class="cat-item">
-            <div class="cat-icon">🌐</div>
-            <span class="cat-name">WEBSITE</span>
+        <div class="category-scroll">
+            <div class="cat-item" onclick="bukaHalaman('page-web')">
+                <i class="ri-global-line cat-icon"></i><span class="cat-name">WEBSITE</span>
+            </div>
+            <div class="cat-item" onclick="bukaHalaman('page-desain')">
+                <i class="ri-palette-line cat-icon"></i><span class="cat-name">DESAIN</span>
+            </div>
+            <div class="cat-item" onclick="bukaHalaman('page-nulis')">
+                <i class="ri-quill-pen-line cat-icon"></i><span class="cat-name">NULIS</span>
+            </div>
+            <div class="cat-item" onclick="bukaHalaman('page-cv')">
+                <i class="ri-file-user-line cat-icon"></i><span class="cat-name">CV/LAMARAN</span>
+            </div>
         </div>
-        <div class="cat-item">
-            <div class="cat-icon">🎨</div>
-            <span class="cat-name">DESAIN</span>
+
+        <div class="service-list-section">
+            <div class="section-title">Kenapa Pilih ASR?</div>
+            <ul class="check-list">
+                <li><i class="ri-timer-flash-line"></i> Pengerjaan Cepat (1-2 Hari Jadi)</li>
+                <li><i class="ri-wallet-3-line"></i> Harga Bersahabat untuk UMKM</li>
+                <li><i class="ri-customer-service-2-line"></i> Gratis Konsultasi via WhatsApp</li>
+            </ul>
+            <div style="background:#dcfce7; color:#14532d; padding:10px; border-radius:6px; font-size:12px; margin-top:10px; font-weight:bold; text-align:center; display:flex; align-items:center; justify-content:center; gap:5px;">
+                <i class="ri-shield-check-line"></i> Amanah • Profesional • Terpercaya
+            </div>
         </div>
-        <div class="cat-item">
-            <div class="cat-icon">✍️</div>
-            <span class="cat-name">NULIS</span>
+
+        <div class="product-section" id="produk">
+            <div class="section-title">Layanan Unggulan</div>
+            <div class="grid">
+                
+                <div class="card">
+                    <div id="badge-diskon" class="badge-promo" style="display: none;">DISKON 50%</div>
+                    <img src="1.png" alt="Web" class="img-hero">
+                    <div class="card-body">
+                        <div class="card-title">Website Siap Pakai</div>
+                        <div id="harga-web" class="card-price">Mulai Rp 100rb</div>
+                        <div class="btn-small" onclick="bukaHalaman('page-web')">Lihat Detail</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="2.png" alt="Desain" class="img-hero">
+                    <div class="card-body">
+                        <div class="card-title">Jasa Desain Poster</div>
+                        <div class="card-price">Mulai Rp 15rb</div>
+                        <div class="btn-small" onclick="bukaHalaman('page-desain')">Lihat Detail</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="3.png" alt="Ketik" class="img-hero">
+                    <div class="card-body">
+                        <div class="card-title">Jasa Ketik / Tugas</div>
+                        <div class="card-price">Mulai Rp 10rb</div>
+                        <div class="btn-small" onclick="bukaHalaman('page-nulis')">Lihat Detail</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="4.png" alt="CV" class="img-hero">
+                    <div class="card-body">
+                        <div class="card-title">Bikin CV Lamaran</div>
+                        <div class="card-price">Mulai Rp 25rb</div>
+                        <div class="btn-small" onclick="bukaHalaman('page-cv')">Lihat Detail</div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="cat-item">
-            <div class="cat-icon">📄</div>
-            <span class="cat-name">CV/LAMARAN</span>
+
+        <div class="footer">
+            &copy; 2025 ASR Digital Agency.<br>Melayani Sepenuh Hati dari Cibarusah
         </div>
     </div>
 
-    <div class="service-list-section">
-        <div class="section-title">Layanan Kami:</div>
-        <ul class="check-list">
-            <li><span>✔</span> Pembuatan Website UMKM & Portofolio</li>
-            <li><span>✔</span> Desain Banner, Poster & Brosur</li>
-            <li><span>✔</span> Copywriting & Deskripsi Produk</li>
-            <li><span>✔</span> Penulisan Ulang Dokumen (Ketik)</li>
-            <li><span>✔</span> Desain Kartu Nama & Sertifikat</li>
-        </ul>
-        <div style="background:#dcfce7; color:#14532d; padding:10px; border-radius:6px; font-size:12px; margin-top:10px; font-weight:bold; text-align:center;">
-            ⚡ Pengerjaan Cepat • Bebas Revisi
+
+    <div id="page-web" class="page-section">
+        <header class="sub-header">
+            <div class="back-btn" onclick="bukaHalaman('page-home')"><i class="ri-arrow-left-s-line"></i> KEMBALI</div>
+            <div class="page-title">Pilihan Website</div>
+        </header>
+        <div class="container sub-page-content">
+            <div class="grid">
+                <div class="card">
+                    <img src="5.png" alt="Toko Online" class="img-web">
+                    <div class="card-info"><div class="card-title">Toko Online</div><div class="card-desc">Fitur keranjang & WA.</div></div>
+                </div>
+                <div class="card">
+                    <img src="6.png" alt="Web Sekolah" class="img-web">
+                    <div class="card-info"><div class="card-title">Web Sekolah</div><div class="card-desc">Sistem akademik.</div></div>
+                </div>
+                <div class="card">
+                    <img src="7.png" alt="Company Profile" class="img-web">
+                    <div class="card-info"><div class="card-title">Company Profile</div><div class="card-desc">Branding perusahaan.</div></div>
+                </div>
+                <div class="card">
+                    <img src="8.png" alt="Landing Page" class="img-web">
+                    <div class="card-info"><div class="card-title">Landing Page</div><div class="card-desc">Fokus penjualan.</div></div>
+                </div>
+            </div>
+            <a href="https://wa.me/6285892767032?text=Halo%20ASR,%20saya%20mau%20konsultasi%20pembuatan%20website" class="btn-wa"><i class="ri-whatsapp-line"></i> Pesan Website Sekarang</a>
         </div>
     </div>
 
-    <div class="product-section" id="produk">
-        <div class="section-title">Paket Terlaris</div>
-        <div class="grid">
-            
-            <div class="card">
-                <img src="https://placehold.co/400x300/e2e8f0/1e293b?text=WEB+KILAT" alt="Web">
-                <div class="card-body">
-                    <div class="card-title">Website Siap Pakai</div>
-                    <div class="card-price">Rp 50.000</div>
-                    <a href="https://wa.me/628123456789?text=Min%20mau%20order%20Website" class="btn-small">Pesan</a>
+
+    <div id="page-desain" class="page-section">
+        <header class="sub-header">
+            <div class="back-btn" onclick="bukaHalaman('page-home')"><i class="ri-arrow-left-s-line"></i> KEMBALI</div>
+            <div class="page-title">Galeri Desain</div>
+        </header>
+        <div class="container sub-page-content">
+            <div class="grid">
+                <div class="card">
+                    <img src="9.png" alt="Poster" class="img-desain">
+                    <div class="card-info"><div class="card-title">Poster Iklan</div><div class="card-desc">Promosi visual.</div></div>
+                </div>
+                <div class="card">
+                    <img src="10.png" alt="Logo" class="img-desain">
+                    <div class="card-info"><div class="card-title">Logo Brand</div><div class="card-desc">Identitas unik.</div></div>
+                </div>
+                <div class="card">
+                    <img src="11.png" alt="Banner" class="img-desain">
+                    <div class="card-info"><div class="card-title">Banner Digital</div><div class="card-desc">Untuk sosmed.</div></div>
+                </div>
+                <div class="card">
+                    <img src="12.png" alt="Kartu Nama" class="img-desain">
+                    <div class="card-info"><div class="card-title">Stationery</div><div class="card-desc">Kartu nama.</div></div>
                 </div>
             </div>
-
-            <div class="card">
-                <img src="https://placehold.co/400x300/e2e8f0/1e293b?text=DESAIN+POSTER" alt="Desain">
-                <div class="card-body">
-                    <div class="card-title">Jasa Desain Poster</div>
-                    <div class="card-price">Rp 15.000</div>
-                    <a href="https://wa.me/628123456789?text=Min%20mau%20order%20Desain" class="btn-small">Pesan</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://placehold.co/400x300/e2e8f0/1e293b?text=KETIK+DOKUMEN" alt="Ketik">
-                <div class="card-body">
-                    <div class="card-title">Jasa Ketik / Tugas</div>
-                    <div class="card-price">Rp 10.000</div>
-                    <a href="https://wa.me/628123456789?text=Min%20mau%20jasa%20ketik" class="btn-small">Pesan</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://placehold.co/400x300/e2e8f0/1e293b?text=CV+KEREN" alt="CV">
-                <div class="card-body">
-                    <div class="card-title">Bikin CV Lamaran</div>
-                    <div class="card-price">Rp 25.000</div>
-                    <a href="https://wa.me/6285892767032?text=Min%20mau%20bikin%20CV" class="btn-small">Pesan</a>
-                </div>
-            </div>
-
+            <a href="https://wa.me/6285892767032?text=Halo%20ASR,%20saya%20mau%20order%20jasa%20desain" class="btn-wa"><i class="ri-palette-line"></i> Pesan Desain Grafis</a>
         </div>
     </div>
 
-    <div class="footer">
-        &copy; 2025 ASR Digital Agency.<br>
-        melayani di seluruh indonesia
+
+    <div id="page-nulis" class="page-section">
+        <header class="sub-header">
+            <div class="back-btn" onclick="bukaHalaman('page-home')"><i class="ri-arrow-left-s-line"></i> KEMBALI</div>
+            <div class="page-title">Jasa Penulisan</div>
+        </header>
+        <div class="container sub-page-content">
+            <div class="grid">
+                <div class="card">
+                    <img src="13.png" alt="Artikel" class="img-nulis">
+                    <div class="card-info"><div class="card-title">Artikel SEO</div><div class="card-desc">Blog Google.</div></div>
+                </div>
+                <div class="card">
+                    <img src="14.png" alt="Caption" class="img-nulis">
+                    <div class="card-info"><div class="card-title">Caption Sosmed</div><div class="card-desc">Engagement.</div></div>
+                </div>
+                <div class="card">
+                    <img src="15.png" alt="Ketik" class="img-nulis">
+                    <div class="card-info"><div class="card-title">Jasa Ketik</div><div class="card-desc">Rapikan dokumen.</div></div>
+                </div>
+                <div class="card">
+                    <img src="16.png" alt="Script" class="img-nulis">
+                    <div class="card-info"><div class="card-title">Naskah Video</div><div class="card-desc">Script TikTok.</div></div>
+                </div>
+            </div>
+            <a href="https://wa.me/6285892767032?text=Halo%20ASR,%20saya%20butuh%20jasa%20ketik/tulis" class="btn-wa"><i class="ri-quill-pen-line"></i> Hubungi Admin</a>
+        </div>
     </div>
+
+
+    <div id="page-cv" class="page-section">
+        <header class="sub-header">
+            <div class="back-btn" onclick="bukaHalaman('page-home')"><i class="ri-arrow-left-s-line"></i> KEMBALI</div>
+            <div class="page-title">Pembuatan CV</div>
+        </header>
+        <div class="container sub-page-content">
+            <div class="grid">
+                <div class="card">
+                    <img src="17.png" alt="CV ATS" class="img-cv">
+                    <div class="card-info"><div class="card-title">CV ATS Friendly</div><div class="card-desc">Lolos sistem HRD.</div></div>
+                </div>
+                <div class="card">
+                    <img src="18.png" alt="CV Kreatif" class="img-cv">
+                    <div class="card-info"><div class="card-title">CV Kreatif</div><div class="card-desc">Visual menarik.</div></div>
+                </div>
+                <div class="card">
+                    <img src="19.png" alt="Lamaran" class="img-cv">
+                    <div class="card-info"><div class="card-title">Surat Lamaran</div><div class="card-desc">Formal & Sopan.</div></div>
+                </div>
+                <div class="card">
+                    <img src="20.png" alt="LinkedIn" class="img-cv">
+                    <div class="card-info"><div class="card-title">Makeover LinkedIn</div><div class="card-desc">Profil profesional.</div></div>
+                </div>
+            </div>
+            <a href="https://wa.me/6285892767032?text=Halo%20ASR,%20saya%20mau%20buat%20CV%20lamaran" class="btn-wa"><i class="ri-file-list-3-line"></i> Buat CV Sekarang</a>
+        </div>
+    </div>
+
+    <script>
+        function bukaHalaman(id) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        const batasPromo = new Date(2026, 0, 31, 23, 59, 59);
+        const sekarang = new Date();
+        const badge = document.getElementById('badge-diskon');
+        const harga = document.getElementById('harga-web');
+
+        if (sekarang <= batasPromo) {
+            if(badge) badge.style.display = 'block';
+            if(harga) harga.innerHTML = '<span style="text-decoration: line-through; color: #94a3b8; font-size: 12px; margin-right:5px;">Rp 100rb</span> Rp 50rb';
+        }
+    </script>
 
 </body>
 </html>
